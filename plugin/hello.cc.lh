@@ -1,0 +1,786 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<lh-translation-unit filename='hello.cc' language='C++' client-version='0.1'>
+  <raw-source>#include &lt;stdio.h&gt;
+
+class base
+{
+public:
+  virtual void hello() = 0;
+};
+
+class thing : public base
+{
+public:
+  virtual void hello()
+  {
+    printf("hello ");
+  }
+
+  void world()
+  {
+    printf("world\n");
+    throw 10;
+  }
+};
+
+
+int main(void)
+{
+  thing c;
+  c.hello();
+
+  try
+  {
+    c.world();
+  } catch (int e) {
+  } catch (...) {
+  }
+  return 0;
+}
+</raw-source>
+  <referenced-types>
+    <structure id='1622' name='thing'>
+      <member location='hello.cc:10:1'>
+        <binding id='2611' />
+        <type size='64' alignment='64'>
+          <structure id='1613'/>
+        </type>
+      </member>
+      <member location='hello.cc:10:1'>
+        <binding id='2606' name='thing' />
+        <type alignment='1'>
+          <structure id='1622'/>
+        </type>
+      </member>
+    </structure>
+    <structure id='1613' name='base'>
+      <member location='hello.cc:4:1'>
+        <binding id='2601' name='_vptr.base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <addr-of name='__vtbl_ptr_type'>
+              <function>
+                <return>
+                  <integer name='int' precision='32' />
+                </return>
+                <arguments >
+                </arguments>
+              </function>
+            </addr-of>
+          </addr-of>
+        </type>
+      </member>
+      <member location='hello.cc:4:1'>
+        <binding id='2598' name='base' />
+        <type alignment='1'>
+          <structure id='1613'/>
+        </type>
+      </member>
+    </structure>
+    <structure id='1170' constant='1' name='__fundamental_type_info_pseudo'>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='2041' />
+        <type size='128' alignment='64'>
+          <structure id='1168'/>
+        </type>
+      </member>
+    </structure>
+    <structure id='1168' name='__type_info_pseudo'>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='2038' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='2039' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer constant='1' name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+    </structure>
+  </referenced-types>
+  <function-bodies>
+    <function name='main' location='hello.cc:25' body-begin='26' body-end='37'>
+      <returns>
+        <integer name='int' precision='32' />
+      </returns>
+      <args>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='hello.cc:33:16'>
+            <binding id='2660' name='e' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='hello.cc:27:9'>
+            <binding id='2623' name='c' />
+            <type size='64' alignment='64'>
+              <structure id='1622'/>
+            </type>
+          </local>
+          <local location='hello.cc:36:10'>
+            <binding id='2674' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='hello.cc:34:12'>
+            <binding id='2673' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+          <local location='hello.cc:33:16'>
+            <binding id='2672' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+          <local location='hello.cc:33:16'>
+            <binding id='2671' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+          <local location='hello.cc:33:16'>
+            <binding id='2663' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='int' precision='32' />
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <call location='hello.cc:27:9'>
+            <function name='__comp_ctor ' id='2632' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <bound id='2623' />
+              </addr-of>
+            </args>
+          </call>
+          <call location='hello.cc:28:12'>
+            <function name='hello' id='2607' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <bound id='2623' />
+              </addr-of>
+            </args>
+          </call>
+          <call location='hello.cc:32:14'>
+            <function name='world' id='2609' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <bound id='2623' />
+              </addr-of>
+            </args>
+          </call>
+          <next id='4' exceptional='1' />
+          <next id='3' />
+        </block>
+        <block id='3'>
+          <assign location='hello.cc:36:10'>
+            <lhs>
+              <bound id='2674' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <return>
+            <bound id='2674' />
+          </return>
+        </block>
+        <block id='4'>
+          <exception-dispatch>
+          </exception-dispatch>
+          <next id='5' />
+          <next id='6' />
+        </block>
+        <block id='5'>
+          <call location='hello.cc:33:16'>
+            <function name='__builtin_eh_pointer' id='2006' />
+            <lhs>
+              <bound id='2671' />
+            </lhs>
+            <args>
+              <integer-literal value='1' />
+            </args>
+          </call>
+          <call location='hello.cc:33:16'>
+            <function name='__cxa_begin_catch' id='2662' />
+            <lhs>
+              <bound id='2672' />
+            </lhs>
+            <args>
+              <bound id='2671' />
+            </args>
+          </call>
+          <assign location='hello.cc:33:16'>
+            <lhs>
+              <bound id='2663' />
+            </lhs>
+            <rhs>
+              <bound id='2672' />
+            </rhs>
+          </assign>
+          <assign location='hello.cc:33:16'>
+            <lhs>
+              <bound id='2660' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='2663' />
+              </indirection>
+            </rhs>
+          </assign>
+          <call location='hello.cc:33:16'>
+            <function name='__cxa_end_catch' id='2661' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+            </args>
+          </call>
+          <next id='3' />
+        </block>
+        <block id='6'>
+          <call location='hello.cc:34:12'>
+            <function name='__builtin_eh_pointer' id='2006' />
+            <lhs>
+              <bound id='2673' />
+            </lhs>
+            <args>
+              <integer-literal value='1' />
+            </args>
+          </call>
+          <call location='hello.cc:34:12'>
+            <function name='__cxa_begin_catch' id='2662' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='2673' />
+            </args>
+          </call>
+          <call location='hello.cc:34:12'>
+            <function name='__cxa_end_catch' id='2661' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+            </args>
+          </call>
+          <next id='3' />
+        </block>
+      </body>
+      <externals>
+        <external location='hello.cc:10:1'>
+          <binding id='2632' name='__comp_ctor ' />
+          <type alignment='16'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <structure id='1622'/>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:12:16'>
+          <binding id='2607' name='hello' />
+          <type alignment='16'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <structure id='1622'/>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:17:8'>
+          <binding id='2609' name='world' />
+          <type alignment='16'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <structure id='1622'/>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='&lt;built-in&gt;:0:0'>
+          <binding id='2006' name='__builtin_eh_pointer' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <addr-of>
+                  <void />
+                </addr-of>
+              </return>
+              <arguments >
+                <integer name='int' precision='32' />
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:33:16'>
+          <binding id='2662' name='__cxa_begin_catch' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <addr-of>
+                  <void />
+                </addr-of>
+              </return>
+              <arguments >
+                <addr-of>
+                  <void />
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:33:16'>
+          <binding id='2661' name='__cxa_end_catch' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='__comp_ctor ' location='hello.cc:10' body-begin='0' body-end='10'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='hello.cc:27:9'>
+          <binding id='2633' name='this' />
+          <type size='64' alignment='64'>
+            <addr-of constant='1'>
+              <structure id='1622'/>
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='hello.cc:10:1'>
+            <binding id='2681' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <structure id='1613'/>
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='hello.cc:10:1'>
+            <lhs>
+              <bound id='2681' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <member-ref>
+                  <structure>
+                    <indirection>
+                      <bound-parameter id='2633' />
+                    </indirection>
+                  </structure>
+                  <member>
+                    <bound id='2611' />
+                  </member>
+                </member-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='hello.cc:10:1'>
+            <function name='__base_ctor ' id='2628' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='2681' />
+            </args>
+          </call>
+          <assign location='hello.cc:10:1'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <member-ref>
+                    <structure>
+                      <indirection>
+                        <bound-parameter id='2633' />
+                      </indirection>
+                    </structure>
+                    <member>
+                      <bound id='2611' />
+                    </member>
+                  </member-ref>
+                </structure>
+                <member>
+                  <bound id='2601' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2613' />
+                  </array>
+                  <index>
+                    <integer-literal value='2' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <return location='hello.cc:10:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='hello.cc:4:1'>
+          <binding id='2628' name='__base_ctor ' />
+          <type alignment='16'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <structure id='1613'/>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='__base_ctor ' location='hello.cc:4' body-begin='0' body-end='4'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='hello.cc:27:9'>
+          <binding id='2629' name='this' />
+          <type size='64' alignment='64'>
+            <addr-of constant='1'>
+              <structure id='1613'/>
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+        </locals>
+        <block id='2'>
+          <assign location='hello.cc:4:1'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <indirection>
+                    <bound-parameter id='2629' />
+                  </indirection>
+                </structure>
+                <member>
+                  <bound id='2601' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2603' />
+                  </array>
+                  <index>
+                    <integer-literal value='2' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <return location='hello.cc:4:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+      </externals>
+    </function>
+    <function name='hello' location='hello.cc:12' body-begin='0' body-end='15'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='hello.cc:12:22'>
+          <binding id='2608' name='this' />
+          <type size='64' alignment='64'>
+            <addr-of constant='1'>
+              <structure id='1622'/>
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+        </locals>
+        <block id='2'>
+          <call location='hello.cc:14:21'>
+            <function name='printf' id='1077' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>hello \x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+          <return location='hello.cc:15:3'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='/usr/include/stdio.h:337:12'>
+          <binding id='1077' name='printf' />
+          <type alignment='8'>
+            <function attributes='nonnull,format'>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='world' location='hello.cc:17' body-begin='0' body-end='21'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='hello.cc:17:14'>
+          <binding id='2610' name='this' />
+          <type size='64' alignment='64'>
+            <addr-of constant='1'>
+              <structure id='1622'/>
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='hello.cc:20:13'>
+            <binding id='2682' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='int' precision='32' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='hello.cc:20:11'>
+            <binding id='2619' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <call location='hello.cc:19:22'>
+            <function name='__builtin_puts' id='1088' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>world\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+          <call location='hello.cc:20:13'>
+            <function name='__cxa_allocate_exception' id='2618' />
+            <lhs>
+              <bound id='2619' />
+            </lhs>
+            <args>
+              <integer-literal value='4' />
+            </args>
+          </call>
+          <assign location='hello.cc:20:13'>
+            <lhs>
+              <bound id='2682' />
+            </lhs>
+            <rhs>
+              <bound id='2619' />
+            </rhs>
+          </assign>
+          <assign location='hello.cc:20:13'>
+            <lhs>
+              <indirection>
+                <bound id='2682' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <integer-literal value='10' />
+            </rhs>
+          </assign>
+          <call location='hello.cc:20:11'>
+            <function name='__cxa_throw' id='2617' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='2619' />
+              <addr-of>
+                <bound id='2620' />
+              </addr-of>
+              <integer-literal value='0' />
+            </args>
+          </call>
+        </block>
+      </body>
+      <externals>
+        <external location='&lt;built-in&gt;:0:0'>
+          <binding id='1088' name='__builtin_puts' />
+          <type alignment='8'>
+            <function attributes='nonnull'>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:20:11'>
+          <binding id='2618' name='__cxa_allocate_exception' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <addr-of>
+                  <void />
+                </addr-of>
+              </return>
+              <arguments >
+                <integer name='long unsigned int' unsigned='1' precision='64' />
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:20:11'>
+          <binding id='2617' name='__cxa_throw' />
+          <type alignment='8'>
+            <function attributes='noreturn'>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <void />
+                </addr-of>
+                <addr-of>
+                  <void />
+                </addr-of>
+                <addr-of>
+                  <function>
+                    <return>
+                      <void />
+                    </return>
+                    <arguments >
+                      <addr-of>
+                        <void />
+                      </addr-of>
+                      <void />
+                    </arguments>
+                  </function>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='hello.cc:20:11'>
+          <binding id='2620' name='_ZTIi' />
+          <type size='128' alignment='64'>
+            <structure id='1170' constant='1'/>
+          </type>
+        </external>
+      </externals>
+    </function>
+  </function-bodies>
+</lh-translation-unit>

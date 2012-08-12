@@ -1,0 +1,4811 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<lh-translation-unit filename='helloworld.c' language='C' client-version='0.1'>
+  <raw-source>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+#include &lt;assert.h&gt;
+
+static int xyz = 2;
+static float fx = 1.03;
+static struct { int x, y; } zyx = { 1, 2 };
+
+static void ksa(unsigned char state[], unsigned char key[], int len)
+{
+   int i,j=0,t; 
+
+   t = zyx.y;
+   
+   for (i=0; i &lt; 256; ++i)
+      state[i] = i; 
+   for (i=0; i &lt; 256; ++i) {
+      j = (j + state[i] + key[i % len]) % 256; 
+      t = state[i]; 
+      state[i] = state[j]; 
+      state[j] = t; 
+   }   
+}
+
+static void prga(unsigned char state[], unsigned char out[], int len)
+{  
+   int i=0,j=0,x,t; 
+   static unsigned char key; 
+   
+   for (x=0; x &lt; len; ++x)  {
+      i = (i + 1) % 256; 
+      j = (j + state[i]) % 256; 
+      t = state[i]; 
+      state[i] = state[j]; 
+      state[j] = t; 
+      out[x] = state[(state[i] + state[j]) % 256];
+   }   
+}  
+
+static const char *get_location(const char *loc)
+{
+  return loc;
+}
+
+static void do_stuff(const char **abc)
+{
+  FILE *f = fopen("/dev/null", "r");
+  assert(f != NULL);
+  assert(f);
+  fclose(f);
+  abc++;
+}
+
+static void expressions(void)
+{
+  int x;
+  long y;
+  int (*thing)(const char *t, ...) = printf;
+  int z[3];
+  int u[3] = { 1, 2, 3};
+
+  y = x * xyz * fx;
+  y = x / 2;
+  y = (long) &amp;x;
+  y = x &lt; 1;
+  y = x &lt;= 1;
+  y = x &gt; 0;
+  y = x == 0;
+  y = x != 0;
+  y = !x;
+  y = z[0];
+  y = x &gt;= 1;
+  y += 1;
+  y -= 1;
+  y++;
+  y += 1.2f;
+  y--;
+  *z += 1;
+  *z += 1;
+  thing("test");
+  z[0] = x;
+  *z = 2;
+  *(z+1) = 2;
+  *z = 1;
+}
+
+static void control_structures(void)
+{
+  volatile int y = 2;
+
+  if (y == 2)
+    printf("two");
+  else
+    if (y == 3)
+      printf("impossible");
+
+  switch (y)
+  {
+    case 1:
+      printf("inconceivable");
+    case 3:
+      printf("impossible");
+      break;
+    case 2:
+      printf("two");
+      break;
+    default:
+      printf("also hard");
+      break;
+  }
+
+  if (y == 2)
+    printf("two");
+
+  for (y = 0; y &lt; 2; y++)
+  {
+    long long n = 4;
+
+    if (y == n)
+      continue;
+    if (y == 2)
+      break;
+    printf("a");
+  }
+
+  if (y == 2 || main())
+  {
+    printf("ok");
+  }
+
+  do
+  {
+    int n = 6;
+    printf("a");
+  }
+  while (0);
+
+  while (1)
+  {
+    printf("a");
+    if (1)
+      break;
+  }
+
+  goto abc;
+
+xyz:
+  printf("abc");
+  return;
+
+abc:
+  goto xyz;
+
+}
+
+extern int global;
+int global = 5;
+static int file_local;
+
+static void scoping(void)
+{
+  int local;
+  static int function_local;
+  local = global;
+  function_local = file_local;
+}
+
+static void varargs(const char *fmt, ...)
+{
+  va_list vl;
+
+  va_start(vl, fmt);
+
+  while (*fmt)
+  {
+    int y = va_arg(vl, int);
+    printf("arg = %d\n", y);
+    fmt++;
+  }
+
+  va_end(vl);
+}
+
+int main(void)
+{
+  struct {
+    int x, y, z;
+  } v = { 0, 1, 2 };
+  printf("hello %s! %p\n", get_location("world"), &amp;v);
+  do_stuff((const char **) &amp;"hello");
+  expressions();
+  control_structures();
+  scoping();
+  varargs("abc", 1, 2, 3);
+  return 0;
+}
+</raw-source>
+  <referenced-types>
+    <structure id='1618'>
+      <member location='helloworld.c:187:9'>
+        <binding id='2104' name='x' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='helloworld.c:187:12'>
+        <binding id='2105' name='y' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='helloworld.c:187:15'>
+        <binding id='2106' name='z' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+    </structure>
+    <array id='1525' name='va_list'>
+      <type>
+        <structure id='82'/>
+      </type>
+      <domain>
+        <integer precision='64' min='0' max='0' />
+      </domain>
+    </array>
+    <structure id='82' name='__va_list_tag'>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='25' name='gp_offset' />
+        <type size='32' alignment='32'>
+          <integer name='unsigned int' unsigned='1' precision='32' />
+        </type>
+      </member>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='26' name='fp_offset' />
+        <type size='32' alignment='32'>
+          <integer name='unsigned int' unsigned='1' precision='32' />
+        </type>
+      </member>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='27' name='overflow_arg_area' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='&lt;built-in&gt;:0:0'>
+        <binding id='28' name='reg_save_area' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+    </structure>
+    <array id='1571'>
+      <type>
+        <integer name='int' precision='32' />
+      </type>
+      <domain>
+        <integer precision='64' min='0' max='2' />
+      </domain>
+    </array>
+    <array id='1555'>
+      <type>
+        <integer constant='1' name='char' precision='8' />
+      </type>
+      <domain>
+        <integer precision='64' min='0' max='8' />
+      </domain>
+    </array>
+    <structure id='1200' name='FILE'>
+      <member location='/usr/include/libio.h:272:7'>
+        <binding id='1694' name='_flags' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:277:9'>
+        <binding id='1695' name='_IO_read_ptr' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:278:9'>
+        <binding id='1696' name='_IO_read_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:279:9'>
+        <binding id='1697' name='_IO_read_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:280:9'>
+        <binding id='1698' name='_IO_write_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:281:9'>
+        <binding id='1699' name='_IO_write_ptr' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:282:9'>
+        <binding id='1700' name='_IO_write_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:283:9'>
+        <binding id='1701' name='_IO_buf_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:284:9'>
+        <binding id='1702' name='_IO_buf_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:286:9'>
+        <binding id='1703' name='_IO_save_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:287:9'>
+        <binding id='1704' name='_IO_backup_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:288:9'>
+        <binding id='1705' name='_IO_save_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:290:22'>
+        <binding id='1706' name='_markers' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <structure id='1218'/>
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:292:20'>
+        <binding id='1707' name='_chain' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <structure id='1199'/>
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:294:7'>
+        <binding id='1708' name='_fileno' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:298:7'>
+        <binding id='1709' name='_flags2' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:300:13'>
+        <binding id='1710' name='_old_offset' />
+        <type size='64' alignment='64'>
+          <integer name='__off_t' precision='64' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:304:18'>
+        <binding id='1711' name='_cur_column' />
+        <type size='16' alignment='16'>
+          <integer name='short unsigned int' unsigned='1' precision='16' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:305:15'>
+        <binding id='1712' name='_vtable_offset' />
+        <type size='8' alignment='8'>
+          <integer name='signed char' precision='8' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:306:8'>
+        <binding id='1713' name='_shortbuf' />
+        <type size='8' alignment='8'>
+          <array id='1223'/>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:310:15'>
+        <binding id='1714' name='_lock' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:319:15'>
+        <binding id='1715' name='_offset' />
+        <type size='64' alignment='64'>
+          <integer name='__off64_t' precision='64' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:328:9'>
+        <binding id='1716' name='__pad1' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:329:9'>
+        <binding id='1717' name='__pad2' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:330:9'>
+        <binding id='1718' name='__pad3' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:331:9'>
+        <binding id='1719' name='__pad4' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:332:10'>
+        <binding id='1720' name='__pad5' />
+        <type size='64' alignment='64'>
+          <integer name='size_t' unsigned='1' precision='64' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:334:7'>
+        <binding id='1721' name='_mode' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:336:8'>
+        <binding id='1722' name='_unused2' />
+        <type size='160' alignment='8'>
+          <array id='1226'/>
+        </type>
+      </member>
+    </structure>
+    <structure id='1218' name='_IO_marker'>
+      <member location='/usr/include/libio.h:187:22'>
+        <binding id='1686' name='_next' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <structure id='1218'/>
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:188:20'>
+        <binding id='1687' name='_sbuf' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <structure id='1199'/>
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:192:7'>
+        <binding id='1688' name='_pos' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+    </structure>
+    <structure id='1199' name='_IO_FILE'>
+      <member location='/usr/include/libio.h:272:7'>
+        <binding id='1694' name='_flags' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:277:9'>
+        <binding id='1695' name='_IO_read_ptr' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:278:9'>
+        <binding id='1696' name='_IO_read_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:279:9'>
+        <binding id='1697' name='_IO_read_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:280:9'>
+        <binding id='1698' name='_IO_write_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:281:9'>
+        <binding id='1699' name='_IO_write_ptr' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:282:9'>
+        <binding id='1700' name='_IO_write_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:283:9'>
+        <binding id='1701' name='_IO_buf_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:284:9'>
+        <binding id='1702' name='_IO_buf_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:286:9'>
+        <binding id='1703' name='_IO_save_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:287:9'>
+        <binding id='1704' name='_IO_backup_base' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:288:9'>
+        <binding id='1705' name='_IO_save_end' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <integer name='char' precision='8' />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:290:22'>
+        <binding id='1706' name='_markers' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <structure id='1218'/>
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:292:20'>
+        <binding id='1707' name='_chain' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <structure id='1199'/>
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:294:7'>
+        <binding id='1708' name='_fileno' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:298:7'>
+        <binding id='1709' name='_flags2' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:300:13'>
+        <binding id='1710' name='_old_offset' />
+        <type size='64' alignment='64'>
+          <integer name='__off_t' precision='64' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:304:18'>
+        <binding id='1711' name='_cur_column' />
+        <type size='16' alignment='16'>
+          <integer name='short unsigned int' unsigned='1' precision='16' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:305:15'>
+        <binding id='1712' name='_vtable_offset' />
+        <type size='8' alignment='8'>
+          <integer name='signed char' precision='8' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:306:8'>
+        <binding id='1713' name='_shortbuf' />
+        <type size='8' alignment='8'>
+          <array id='1223'/>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:310:15'>
+        <binding id='1714' name='_lock' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:319:15'>
+        <binding id='1715' name='_offset' />
+        <type size='64' alignment='64'>
+          <integer name='__off64_t' precision='64' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:328:9'>
+        <binding id='1716' name='__pad1' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:329:9'>
+        <binding id='1717' name='__pad2' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:330:9'>
+        <binding id='1718' name='__pad3' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:331:9'>
+        <binding id='1719' name='__pad4' />
+        <type size='64' alignment='64'>
+          <addr-of>
+            <void />
+          </addr-of>
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:332:10'>
+        <binding id='1720' name='__pad5' />
+        <type size='64' alignment='64'>
+          <integer name='size_t' unsigned='1' precision='64' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:334:7'>
+        <binding id='1721' name='_mode' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='/usr/include/libio.h:336:8'>
+        <binding id='1722' name='_unused2' />
+        <type size='160' alignment='8'>
+          <array id='1226'/>
+        </type>
+      </member>
+    </structure>
+    <array id='1223'>
+      <type>
+        <integer name='char' precision='8' />
+      </type>
+      <domain>
+        <integer precision='64' min='0' max='0' />
+      </domain>
+    </array>
+    <array id='1226'>
+      <type>
+        <integer name='char' precision='8' />
+      </type>
+      <domain>
+        <integer precision='64' min='0' max='19' />
+      </domain>
+    </array>
+    <structure id='1529'>
+      <member location='helloworld.c:7:21'>
+        <binding id='2016' name='x' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+      <member location='helloworld.c:7:24'>
+        <binding id='2017' name='y' />
+        <type size='32' alignment='32'>
+          <integer name='int' precision='32' />
+        </type>
+      </member>
+    </structure>
+  </referenced-types>
+  <function-bodies>
+    <function name='main' location='helloworld.c:184' body-begin='185' body-end='196'>
+      <returns>
+        <integer name='int' precision='32' />
+      </returns>
+      <args>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:188:5'>
+            <binding id='2107' name='v' />
+            <type size='96' alignment='32'>
+              <structure id='1618'/>
+            </type>
+          </local>
+          <local location='helloworld.c:195:3'>
+            <binding id='3302' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:190:11'>
+            <binding id='3301' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:189:9'>
+            <binding id='3300' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:189:9'>
+            <binding id='3299' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:188:5'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <bound id='2107' />
+                </structure>
+                <member>
+                  <bound id='2104' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:188:5'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <bound id='2107' />
+                </structure>
+                <member>
+                  <bound id='2105' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:188:5'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <bound id='2107' />
+                </structure>
+                <member>
+                  <bound id='2106' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='2' />
+            </rhs>
+          </assign>
+          <call location='helloworld.c:189:9'>
+            <function name='get_location' id='2047' />
+            <lhs>
+              <bound id='3299' />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>world\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+          <assign location='helloworld.c:189:9'>
+            <lhs>
+              <bound id='3300' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>hello %s! %p\x0a\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:189:9'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3300' />
+              <bound id='3299' />
+              <addr-of>
+                <bound id='2107' />
+              </addr-of>
+            </args>
+          </call>
+          <assign location='helloworld.c:190:11'>
+            <lhs>
+              <bound id='3301' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <string-literal>hello\x00</string-literal>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:190:11'>
+            <function name='do_stuff' id='2050' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3301' />
+            </args>
+          </call>
+          <call location='helloworld.c:191:14'>
+            <function name='expressions' id='2055' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+            </args>
+          </call>
+          <call location='helloworld.c:192:21'>
+            <function name='control_structures' id='2064' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+            </args>
+          </call>
+          <call location='helloworld.c:193:10'>
+            <function name='scoping' id='2088' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+            </args>
+          </call>
+          <call location='helloworld.c:194:10'>
+            <function name='varargs' id='2093' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>abc\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+              <integer-literal value='1' />
+              <integer-literal value='2' />
+              <integer-literal value='3' />
+            </args>
+          </call>
+          <assign location='helloworld.c:195:3'>
+            <lhs>
+              <bound id='3302' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <return>
+            <bound id='3302' />
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='helloworld.c:40:20'>
+          <binding id='2047' name='get_location' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </return>
+              <arguments >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='/usr/include/stdio.h:337:12'>
+          <binding id='741' name='printf' />
+          <type alignment='8'>
+            <function attributes='nonnull,format'>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:45:13'>
+          <binding id='2050' name='do_stuff' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <addr-of>
+                    <integer constant='1' name='char' precision='8' />
+                  </addr-of>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:54:13'>
+          <binding id='2055' name='expressions' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:87:13'>
+          <binding id='2064' name='control_structures' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:160:13'>
+          <binding id='2088' name='scoping' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:168:13'>
+          <binding id='2093' name='varargs' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='varargs' location='helloworld.c:168' body-begin='169' body-end='182'>
+      <returns>
+        <void />
+      </returns>
+      <args varargs='1'>
+        <arg location='helloworld.c:168:33'>
+          <binding id='2092' name='fmt' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <integer constant='1' name='char' precision='8' />
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:176:9'>
+            <binding id='2096' name='y' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:170:11'>
+            <binding id='2095' name='vl' />
+            <type size='192' alignment='64'>
+              <array id='1525'/>
+            </type>
+          </local>
+          <local location='helloworld.c:174:10'>
+            <binding id='3318' />
+            <type size='8' alignment='8'>
+              <integer constant='1' name='char' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:177:11'>
+            <binding id='3317' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3316' name='addr.1' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='int' precision='32' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3315' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3314' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3313' />
+            <type size='32' alignment='32'>
+              <integer name='unsigned int' unsigned='1' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3312' />
+            <type size='32' alignment='32'>
+              <integer name='unsigned int' unsigned='1' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3311' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3310' />
+            <type size='32' alignment='32'>
+              <integer name='unsigned int' unsigned='1' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3309' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3307' />
+            <type size='32' alignment='32'>
+              <integer name='unsigned int' unsigned='1' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:176:13'>
+            <binding id='3304' name='addr.0' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <void />
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <call location='helloworld.c:172:3'>
+            <function name='__builtin_va_start' id='983' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2095' />
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+              <integer-literal value='0' />
+            </args>
+          </call>
+          <next id='7' />
+        </block>
+        <block id='3'>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3307' />
+            </lhs>
+            <rhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='25' />
+                </member>
+              </member-ref>
+            </rhs>
+          </assign>
+          <if location='helloworld.c:176:13'>
+            <bound id='3307' />
+            <greater-than-or-equal />
+            <integer-literal value='48' />
+            <then id='5' />
+            <else id='4' />
+          </if>
+        </block>
+        <block id='4'>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3309' />
+            </lhs>
+            <rhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='28' />
+                </member>
+              </member-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3310' />
+            </lhs>
+            <rhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='25' />
+                </member>
+              </member-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3311' />
+            </lhs>
+            <rhs>
+              <bound id='3310' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3304' />
+            </lhs>
+            <rhs>
+              <bound id='3309' />
+              <pointer-offset />
+              <bound id='3311' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3312' />
+            </lhs>
+            <rhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='25' />
+                </member>
+              </member-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3313' />
+            </lhs>
+            <rhs>
+              <bound id='3312' />
+              <plus />
+              <integer-literal value='8' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='25' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <bound id='3313' />
+            </rhs>
+          </assign>
+          <next id='6' />
+        </block>
+        <block id='5'>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3314' />
+            </lhs>
+            <rhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='27' />
+                </member>
+              </member-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3304' />
+            </lhs>
+            <rhs>
+              <bound id='3314' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3315' />
+            </lhs>
+            <rhs>
+              <bound id='3314' />
+              <pointer-offset />
+              <integer-literal value='8' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <member-ref>
+                <structure>
+                  <item-ref>
+                    <array>
+                      <bound id='2095' />
+                    </array>
+                    <index>
+                      <integer-literal value='0' />
+                    </index>
+                  </item-ref>
+                </structure>
+                <member>
+                  <bound id='27' />
+                </member>
+              </member-ref>
+            </lhs>
+            <rhs>
+              <bound id='3315' />
+            </rhs>
+          </assign>
+          <next id='6' />
+        </block>
+        <block id='6'>
+          <assign location='helloworld.c:176:13'>
+            <lhs>
+              <bound id='3316' />
+            </lhs>
+            <rhs>
+              <bound id='3304' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:176:9'>
+            <lhs>
+              <bound id='2096' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3316' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:177:11'>
+            <lhs>
+              <bound id='3317' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>arg = %d\x0a\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:177:11'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3317' />
+              <bound id='2096' />
+            </args>
+          </call>
+          <assign location='helloworld.c:178:8'>
+            <lhs>
+              <bound-parameter id='2092' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2092' />
+              <pointer-offset />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <next id='7' />
+        </block>
+        <block id='7'>
+          <assign location='helloworld.c:174:10'>
+            <lhs>
+              <bound id='3318' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound-parameter id='2092' />
+              </indirection>
+            </rhs>
+          </assign>
+          <if location='helloworld.c:174:9'>
+            <bound id='3318' />
+            <not-equal />
+            <integer-literal value='0' />
+            <then id='3' />
+            <else id='8' />
+          </if>
+        </block>
+        <block id='8'>
+          <call location='helloworld.c:181:3'>
+            <function name='__builtin_va_end' id='982' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2095' />
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+          <return location='helloworld.c:182:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='&lt;built-in&gt;:0:0'>
+          <binding id='983' name='__builtin_va_start' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <structure id='82'/>
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='/usr/include/stdio.h:337:12'>
+          <binding id='741' name='printf' />
+          <type alignment='8'>
+            <function attributes='nonnull,format'>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='&lt;built-in&gt;:0:0'>
+          <binding id='982' name='__builtin_va_end' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <structure id='82'/>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='scoping' location='helloworld.c:160' body-begin='161' body-end='166'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:163:14'>
+            <binding id='2091' name='function_local' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:162:7'>
+            <binding id='2090' name='local' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:165:18'>
+            <binding id='3319' name='file_local.2' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:164:9'>
+            <lhs>
+              <bound id='2090' />
+            </lhs>
+            <rhs>
+              <bound id='2084' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:165:18'>
+            <lhs>
+              <bound id='3319' />
+            </lhs>
+            <rhs>
+              <bound id='2086' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:165:18'>
+            <lhs>
+              <bound id='2091' />
+            </lhs>
+            <rhs>
+              <bound id='3319' />
+            </rhs>
+          </assign>
+          <return location='helloworld.c:166:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='helloworld.c:157:5'>
+          <binding id='2084' name='global' />
+          <type size='32' alignment='32'>
+            <integer name='int' precision='32' />
+          </type>
+          <initial>
+            <integer-literal value='5' />
+          </initial>
+        </external>
+        <external location='helloworld.c:158:12'>
+          <binding id='2086' name='file_local' />
+          <type size='32' alignment='32'>
+            <integer name='int' precision='32' />
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='control_structures' location='helloworld.c:87' body-begin='88' body-end='154'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:133:9'>
+            <binding id='2078' name='n' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:117:15'>
+            <binding id='2072' name='n' />
+            <type size='64' alignment='64'>
+              <integer name='long long int' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:89:16'>
+            <binding id='2066' name='y' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:148:9'>
+            <binding id='3356' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:128:11'>
+            <binding id='3353' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:126:21'>
+            <binding id='3352' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:126:9'>
+            <binding id='3350' name='y.12' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:115:17'>
+            <binding id='3347' name='y.11' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:115:23'>
+            <binding id='3346' name='y.10' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:115:23'>
+            <binding id='3345' name='y.9' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:121:11'>
+            <binding id='3342' name='y.8' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:119:11'>
+            <binding id='3339' />
+            <type size='64' alignment='64'>
+              <integer name='long long int' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:119:11'>
+            <binding id='3338' name='y.7' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:113:11'>
+            <binding id='3337' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:112:9'>
+            <binding id='3334' name='y.6' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:108:13'>
+            <binding id='3333' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:105:13'>
+            <binding id='3332' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:102:13'>
+            <binding id='3331' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:100:13'>
+            <binding id='3330' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:97:3'>
+            <binding id='3329' name='y.5' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:95:13'>
+            <binding id='3328' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:94:11'>
+            <binding id='3325' name='y.4' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:92:11'>
+            <binding id='3323' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:91:9'>
+            <binding id='3320' name='y.3' />
+            <type size='32' alignment='32'>
+              <integer volatile='1' name='int' precision='32' />
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:89:16'>
+            <lhs>
+              <bound id='2066' />
+            </lhs>
+            <rhs>
+              <integer-literal value='2' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:91:9'>
+            <lhs>
+              <bound id='3320' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:91:6'>
+            <bound id='3320' />
+            <equal />
+            <integer-literal value='2' />
+            <then id='3' />
+            <else id='4' />
+          </if>
+        </block>
+        <block id='3'>
+          <assign location='helloworld.c:92:11'>
+            <lhs>
+              <bound id='3323' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>two\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:92:11'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3323' />
+            </args>
+          </call>
+          <next id='6' />
+        </block>
+        <block id='4'>
+          <assign location='helloworld.c:94:11'>
+            <lhs>
+              <bound id='3325' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:94:8'>
+            <bound id='3325' />
+            <equal />
+            <integer-literal value='3' />
+            <then id='5' />
+            <else id='6' />
+          </if>
+        </block>
+        <block id='5'>
+          <assign location='helloworld.c:95:13'>
+            <lhs>
+              <bound id='3328' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>impossible\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:95:13'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3328' />
+            </args>
+          </call>
+          <next id='6' />
+        </block>
+        <block id='6'>
+          <assign location='helloworld.c:97:3'>
+            <lhs>
+              <bound id='3329' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <switch location='helloworld.c:97:3'>
+            <index>
+              <bound id='3329' />
+            </index>
+            <default id='10' location='helloworld.c:107:5' />
+            <case id='7' location='helloworld.c:99:5'>
+              <exact>
+                <integer-literal value='1' />
+              </exact>
+            </case>
+            <case id='9' location='helloworld.c:104:5'>
+              <exact>
+                <integer-literal value='2' />
+              </exact>
+            </case>
+            <case id='8' location='helloworld.c:101:5'>
+              <exact>
+                <integer-literal value='3' />
+              </exact>
+            </case>
+          </switch>
+        </block>
+        <block id='7'>
+          <assign location='helloworld.c:100:13'>
+            <lhs>
+              <bound id='3330' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>inconceivable\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:100:13'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3330' />
+            </args>
+          </call>
+          <next id='8' />
+        </block>
+        <block id='8'>
+          <assign location='helloworld.c:102:13'>
+            <lhs>
+              <bound id='3331' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>impossible\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:102:13'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3331' />
+            </args>
+          </call>
+          <next id='11' />
+        </block>
+        <block id='9'>
+          <assign location='helloworld.c:105:13'>
+            <lhs>
+              <bound id='3332' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>two\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:105:13'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3332' />
+            </args>
+          </call>
+          <next id='11' />
+        </block>
+        <block id='10'>
+          <assign location='helloworld.c:108:13'>
+            <lhs>
+              <bound id='3333' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>also hard\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:108:13'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3333' />
+            </args>
+          </call>
+          <next id='11' />
+        </block>
+        <block id='11'>
+          <assign location='helloworld.c:112:9'>
+            <lhs>
+              <bound id='3334' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:112:6'>
+            <bound id='3334' />
+            <equal />
+            <integer-literal value='2' />
+            <then id='12' />
+            <else id='13' />
+          </if>
+        </block>
+        <block id='12'>
+          <assign location='helloworld.c:113:11'>
+            <lhs>
+              <bound id='3337' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>two\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:113:11'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3337' />
+            </args>
+          </call>
+          <next id='13' />
+        </block>
+        <block id='13'>
+          <assign location='helloworld.c:115:10'>
+            <lhs>
+              <bound id='2066' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <next id='20' />
+        </block>
+        <block id='14'>
+          <assign location='helloworld.c:117:15'>
+            <lhs>
+              <bound id='2072' />
+            </lhs>
+            <rhs>
+              <integer-literal value='4' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:119:11'>
+            <lhs>
+              <bound id='3338' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:119:11'>
+            <lhs>
+              <bound id='3339' />
+            </lhs>
+            <rhs>
+              <bound id='3338' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:119:8'>
+            <bound id='3339' />
+            <equal />
+            <bound id='2072' />
+            <then id='15' />
+            <else id='16' />
+          </if>
+        </block>
+        <block id='15'>
+          <next id='19' />
+        </block>
+        <block id='16'>
+          <assign location='helloworld.c:121:11'>
+            <lhs>
+              <bound id='3342' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:121:8'>
+            <bound id='3342' />
+            <equal />
+            <integer-literal value='2' />
+            <then id='17' />
+            <else id='18' />
+          </if>
+        </block>
+        <block id='17'>
+          <next id='21' />
+        </block>
+        <block id='18'>
+          <call location='helloworld.c:123:11'>
+            <function name='__builtin_putchar' id='744' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <integer-literal value='97' />
+            </args>
+          </call>
+          <next id='19' />
+        </block>
+        <block id='19'>
+          <assign location='helloworld.c:115:23'>
+            <lhs>
+              <bound id='3345' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:115:23'>
+            <lhs>
+              <bound id='3346' />
+            </lhs>
+            <rhs>
+              <bound id='3345' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:115:23'>
+            <lhs>
+              <bound id='2066' />
+            </lhs>
+            <rhs>
+              <bound id='3346' />
+            </rhs>
+          </assign>
+          <next id='20' />
+        </block>
+        <block id='20'>
+          <assign location='helloworld.c:115:17'>
+            <lhs>
+              <bound id='3347' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:115:3'>
+            <bound id='3347' />
+            <less-than-or-equal />
+            <integer-literal value='1' />
+            <then id='14' />
+            <else id='21' />
+          </if>
+        </block>
+        <block id='21'>
+          <assign location='helloworld.c:126:9'>
+            <lhs>
+              <bound id='3350' />
+            </lhs>
+            <rhs>
+              <bound id='2066' />
+            </rhs>
+          </assign>
+          <if location='helloworld.c:126:6'>
+            <bound id='3350' />
+            <equal />
+            <integer-literal value='2' />
+            <then id='23' />
+            <else id='22' />
+          </if>
+        </block>
+        <block id='22'>
+          <call location='helloworld.c:126:21'>
+            <function name='main' id='2077' />
+            <lhs>
+              <bound id='3352' />
+            </lhs>
+            <args>
+            </args>
+          </call>
+          <if location='helloworld.c:126:14'>
+            <bound id='3352' />
+            <not-equal />
+            <integer-literal value='0' />
+            <then id='23' />
+            <else id='24' />
+          </if>
+        </block>
+        <block id='23'>
+          <assign location='helloworld.c:128:11'>
+            <lhs>
+              <bound id='3353' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>ok\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:128:11'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3353' />
+            </args>
+          </call>
+          <next id='24' />
+        </block>
+        <block id='24'>
+          <assign location='helloworld.c:133:9'>
+            <lhs>
+              <bound id='2078' />
+            </lhs>
+            <rhs>
+              <integer-literal value='6' />
+            </rhs>
+          </assign>
+          <call location='helloworld.c:134:11'>
+            <function name='__builtin_putchar' id='744' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <integer-literal value='97' />
+            </args>
+          </call>
+          <next id='25' />
+        </block>
+        <block id='25'>
+          <call location='helloworld.c:140:11'>
+            <function name='__builtin_putchar' id='744' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <integer-literal value='97' />
+            </args>
+          </call>
+          <next id='27' />
+        </block>
+        <block id='26'>
+          <assign location='helloworld.c:148:9'>
+            <lhs>
+              <bound id='3356' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>abc\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:148:9'>
+            <function name='printf' id='741' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='3356' />
+            </args>
+          </call>
+          <return>
+          </return>
+        </block>
+        <block id='27'>
+          <next id='26' />
+        </block>
+      </body>
+      <externals>
+        <external location='/usr/include/stdio.h:337:12'>
+          <binding id='741' name='printf' />
+          <type alignment='8'>
+            <function attributes='nonnull,format'>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='&lt;built-in&gt;:0:0'>
+          <binding id='744' name='__builtin_putchar' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments >
+                <integer name='int' precision='32' />
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:184:5'>
+          <binding id='2077' name='main' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments >
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='expressions' location='helloworld.c:54' body-begin='55' body-end='85'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:60:7'>
+            <binding id='2062' name='u' />
+            <type size='96' alignment='32'>
+              <array id='1571'/>
+            </type>
+          </local>
+          <local location='helloworld.c:59:7'>
+            <binding id='2061' name='z' />
+            <type size='96' alignment='32'>
+              <array id='1571'/>
+            </type>
+          </local>
+          <local location='helloworld.c:58:9'>
+            <binding id='2060' name='thing' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <function>
+                  <return>
+                    <integer name='int' precision='32' />
+                  </return>
+                  <arguments varargs='1' >
+                    <addr-of>
+                      <integer constant='1' name='char' precision='8' />
+                    </addr-of>
+                  </arguments>
+                </function>
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:57:8'>
+            <binding id='2058' name='y' />
+            <type size='64' alignment='64'>
+              <integer name='long int' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:56:7'>
+            <binding id='2057' name='x' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:83:6'>
+            <binding id='3381' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='int' precision='32' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:81:8'>
+            <binding id='3380' name='x.24' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:79:6'>
+            <binding id='3379' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:79:6'>
+            <binding id='3378' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:78:6'>
+            <binding id='3377' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:78:6'>
+            <binding id='3376' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:76:5'>
+            <binding id='3375' />
+            <type size='32' alignment='32'>
+              <float name='float' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:76:5'>
+            <binding id='3374' />
+            <type size='32' alignment='32'>
+              <float name='float' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:72:9'>
+            <binding id='3373' name='x.23' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:71:8'>
+            <binding id='3372' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:70:7'>
+            <binding id='3371' name='x.22' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:69:9'>
+            <binding id='3370' name='x.21' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:68:9'>
+            <binding id='3369' name='x.20' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:67:9'>
+            <binding id='3368' name='x.19' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:66:9'>
+            <binding id='3367' name='x.18' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:65:9'>
+            <binding id='3366' name='x.17' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:63:9'>
+            <binding id='3365' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:63:9'>
+            <binding id='3364' name='x.16' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:62:15'>
+            <binding id='3363' />
+            <type size='32' alignment='32'>
+              <float name='float' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:62:15'>
+            <binding id='3362' name='fx.15' />
+            <type size='32' alignment='32'>
+              <float name='float' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:62:15'>
+            <binding id='3361' />
+            <type size='32' alignment='32'>
+              <float name='float' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:62:9'>
+            <binding id='3360' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:62:9'>
+            <binding id='3359' name='xyz.14' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:62:9'>
+            <binding id='3358' name='x.13' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:58:9'>
+            <lhs>
+              <bound id='2060' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <function>
+                  <bound id='741' />
+                </function>
+              </addr-of>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:60:7'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2062' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:60:7'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2062' />
+                </array>
+                <index>
+                  <integer-literal value='1' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='2' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:60:7'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2062' />
+                </array>
+                <index>
+                  <integer-literal value='2' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='3' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:9'>
+            <lhs>
+              <bound id='3358' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:9'>
+            <lhs>
+              <bound id='3359' />
+            </lhs>
+            <rhs>
+              <bound id='2013' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:9'>
+            <lhs>
+              <bound id='3360' />
+            </lhs>
+            <rhs>
+              <bound id='3358' />
+              <multiply />
+              <bound id='3359' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:15'>
+            <lhs>
+              <bound id='3361' />
+            </lhs>
+            <rhs>
+              <float />
+              <bound id='3360' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:15'>
+            <lhs>
+              <bound id='3362' />
+            </lhs>
+            <rhs>
+              <bound id='2014' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:15'>
+            <lhs>
+              <bound id='3363' />
+            </lhs>
+            <rhs>
+              <bound id='3361' />
+              <multiply />
+              <bound id='3362' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:62:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <fixed-point-truncate />
+              <bound id='3363' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:63:9'>
+            <lhs>
+              <bound id='3364' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:63:9'>
+            <lhs>
+              <bound id='3365' />
+            </lhs>
+            <rhs>
+              <bound id='3364' />
+              <division-truncate />
+              <integer-literal value='2' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:63:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3365' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:64:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <bound id='2057' />
+              </addr-of>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:65:9'>
+            <lhs>
+              <bound id='3366' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:65:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3366' />
+              <less-than-or-equal />
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:66:9'>
+            <lhs>
+              <bound id='3367' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:66:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3367' />
+              <less-than-or-equal />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:67:9'>
+            <lhs>
+              <bound id='3368' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:67:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3368' />
+              <greater-than />
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:68:9'>
+            <lhs>
+              <bound id='3369' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:68:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3369' />
+              <equal />
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:69:9'>
+            <lhs>
+              <bound id='3370' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:69:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3370' />
+              <not-equal />
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:70:7'>
+            <lhs>
+              <bound id='3371' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:70:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3371' />
+              <equal />
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:71:8'>
+            <lhs>
+              <bound id='3372' />
+            </lhs>
+            <rhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:71:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3372' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:72:9'>
+            <lhs>
+              <bound id='3373' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:72:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='3373' />
+              <greater-than />
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:73:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='2058' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:74:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='2058' />
+              <plus />
+              <integer-literal value='-1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:75:4'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='2058' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:76:5'>
+            <lhs>
+              <bound id='3374' />
+            </lhs>
+            <rhs>
+              <float />
+              <bound id='2058' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:76:5'>
+            <lhs>
+              <bound id='3375' />
+            </lhs>
+            <rhs>
+              <bound id='3374' />
+              <plus />
+              <float-literal value='1.2000000476837158203125e+0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:76:5'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <fixed-point-truncate />
+              <bound id='3375' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:77:4'>
+            <lhs>
+              <bound id='2058' />
+            </lhs>
+            <rhs>
+              <bound id='2058' />
+              <minus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:78:6'>
+            <lhs>
+              <bound id='3376' />
+            </lhs>
+            <rhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:78:6'>
+            <lhs>
+              <bound id='3377' />
+            </lhs>
+            <rhs>
+              <bound id='3376' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:78:6'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <bound id='3377' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:79:6'>
+            <lhs>
+              <bound id='3378' />
+            </lhs>
+            <rhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:79:6'>
+            <lhs>
+              <bound id='3379' />
+            </lhs>
+            <rhs>
+              <bound id='3378' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:79:6'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <bound id='3379' />
+            </rhs>
+          </assign>
+          <call location='helloworld.c:80:8'>
+            <bound id='2060' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>test\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+          <assign location='helloworld.c:81:8'>
+            <lhs>
+              <bound id='3380' />
+            </lhs>
+            <rhs>
+              <bound id='2057' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:81:8'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <bound id='3380' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:82:6'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='2' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:83:6'>
+            <lhs>
+              <bound id='3381' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2061' />
+                  </array>
+                  <index>
+                    <integer-literal value='1' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:83:10'>
+            <lhs>
+              <indirection>
+                <bound id='3381' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <integer-literal value='2' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:84:6'>
+            <lhs>
+              <item-ref>
+                <array>
+                  <bound id='2061' />
+                </array>
+                <index>
+                  <integer-literal value='0' />
+                </index>
+              </item-ref>
+            </lhs>
+            <rhs>
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <return location='helloworld.c:85:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='/usr/include/stdio.h:337:12'>
+          <binding id='741' name='printf' />
+          <type alignment='8'>
+            <function attributes='nonnull,format'>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments varargs='1' >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='helloworld.c:5:12'>
+          <binding id='2013' name='xyz' />
+          <type size='32' alignment='32'>
+            <integer name='int' precision='32' />
+          </type>
+          <initial>
+            <integer-literal value='2' />
+          </initial>
+        </external>
+        <external location='helloworld.c:6:14'>
+          <binding id='2014' name='fx' />
+          <type size='32' alignment='32'>
+            <float name='float' precision='32' />
+          </type>
+          <initial>
+            <float-literal value='1.0299999713897705078125e+0' />
+          </initial>
+        </external>
+      </externals>
+    </function>
+    <function name='do_stuff' location='helloworld.c:45' body-begin='46' body-end='52'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='helloworld.c:45:35'>
+          <binding id='2049' name='abc' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <addr-of>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:48:3'>
+            <binding id='2053' name='__PRETTY_FUNCTION__' />
+            <type size='72' alignment='8'>
+              <array id='1555'/>
+            </type>
+            <initial>
+              <string-literal>do_stuff\x00</string-literal>
+            </initial>
+          </local>
+          <local location='helloworld.c:47:9'>
+            <binding id='2052' name='f' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <structure id='1200'/>
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:47:18'>
+            <binding id='3383' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:47:18'>
+            <binding id='3382' />
+            <type size='64' alignment='64'>
+              <addr-of restrict='1'>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:47:18'>
+            <lhs>
+              <bound id='3382' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>r\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:47:18'>
+            <lhs>
+              <bound id='3383' />
+            </lhs>
+            <rhs>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>/dev/null\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </rhs>
+          </assign>
+          <call location='helloworld.c:47:9'>
+            <function name='fopen' id='1820' />
+            <lhs>
+              <bound id='2052' />
+            </lhs>
+            <args>
+              <bound id='3383' />
+              <bound id='3382' />
+            </args>
+          </call>
+          <if location='helloworld.c:48:3'>
+            <bound id='2052' />
+            <equal />
+            <integer-literal value='0' />
+            <then id='3' />
+            <else id='4' />
+          </if>
+        </block>
+        <block id='3'>
+          <call location='helloworld.c:48:3'>
+            <function name='__assert_fail' id='2003' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>f != ((void *)0)\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>helloworld.c\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+              <integer-literal value='48' />
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2053' />
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+        </block>
+        <block id='4'>
+          <if location='helloworld.c:49:3'>
+            <bound id='2052' />
+            <equal />
+            <integer-literal value='0' />
+            <then id='5' />
+            <else id='6' />
+          </if>
+        </block>
+        <block id='5'>
+          <call location='helloworld.c:49:3'>
+            <function name='__assert_fail' id='2003' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>f\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <string-literal>helloworld.c\x00</string-literal>
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+              <integer-literal value='49' />
+              <addr-of>
+                <item-ref>
+                  <array>
+                    <bound id='2053' />
+                  </array>
+                  <index>
+                    <integer-literal value='0' />
+                  </index>
+                </item-ref>
+              </addr-of>
+            </args>
+          </call>
+        </block>
+        <block id='6'>
+          <call location='helloworld.c:50:9'>
+            <function name='fclose' id='1813' />
+            <lhs>
+              <void />
+            </lhs>
+            <args>
+              <bound id='2052' />
+            </args>
+          </call>
+          <assign location='helloworld.c:51:6'>
+            <lhs>
+              <bound-parameter id='2049' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2049' />
+              <pointer-offset />
+              <integer-literal value='8' />
+            </rhs>
+          </assign>
+          <return location='helloworld.c:52:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='/usr/include/stdio.h:249:14'>
+          <binding id='1820' name='fopen' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <addr-of>
+                  <structure id='1200'/>
+                </addr-of>
+              </return>
+              <arguments >
+                <addr-of restrict='1'>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <addr-of restrict='1'>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='/usr/include/assert.h:71:13'>
+          <binding id='2003' name='__assert_fail' />
+          <type alignment='8'>
+            <function attributes='noreturn'>
+              <return>
+                <void />
+              </return>
+              <arguments >
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <integer name='unsigned int' unsigned='1' precision='32' />
+                <addr-of>
+                  <integer constant='1' name='char' precision='8' />
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+        <external location='/usr/include/stdio.h:214:12'>
+          <binding id='1813' name='fclose' />
+          <type alignment='8'>
+            <function>
+              <return>
+                <integer name='int' precision='32' />
+              </return>
+              <arguments >
+                <addr-of>
+                  <structure id='1200'/>
+                </addr-of>
+                <void />
+              </arguments>
+            </function>
+          </type>
+        </external>
+      </externals>
+    </function>
+    <function name='get_location' location='helloworld.c:40' body-begin='41' body-end='43'>
+      <returns>
+        <addr-of>
+          <integer constant='1' name='char' precision='8' />
+        </addr-of>
+      </returns>
+      <args>
+        <arg location='helloworld.c:40:45'>
+          <binding id='2046' name='loc' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <integer constant='1' name='char' precision='8' />
+            </addr-of>
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:42:3'>
+            <binding id='3388' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer constant='1' name='char' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:42:3'>
+            <lhs>
+              <bound id='3388' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2046' />
+            </rhs>
+          </assign>
+          <return>
+            <bound id='3388' />
+          </return>
+        </block>
+      </body>
+      <externals>
+      </externals>
+    </function>
+    <function name='prga' location='helloworld.c:25' body-begin='26' body-end='38'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='helloworld.c:25:32'>
+          <binding id='2033' name='state' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </addr-of>
+          </type>
+        </arg>
+        <arg location='helloworld.c:25:55'>
+          <binding id='2034' name='out' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </addr-of>
+          </type>
+        </arg>
+        <arg location='helloworld.c:25:66'>
+          <binding id='2035' name='len' />
+          <type size='32' alignment='32'>
+            <integer name='int' precision='32' />
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:28:25'>
+            <binding id='2042' name='key' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:27:18'>
+            <binding id='2041' name='t' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:27:16'>
+            <binding id='2040' name='x' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:27:12'>
+            <binding id='2039' name='j' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:27:8'>
+            <binding id='2038' name='i' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:21'>
+            <binding id='3421' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:21'>
+            <binding id='3420' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:36:21'>
+            <binding id='3419' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:21'>
+            <binding id='3418' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:32'>
+            <binding id='3417' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:32'>
+            <binding id='3416' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:39'>
+            <binding id='3415' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:39'>
+            <binding id='3414' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:36:39'>
+            <binding id='3413' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:32'>
+            <binding id='3412' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:28'>
+            <binding id='3411' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:28'>
+            <binding id='3410' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:36:28'>
+            <binding id='3409' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:36:10'>
+            <binding id='3408' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:36:10'>
+            <binding id='3407' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:35:16'>
+            <binding id='3406' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:35:12'>
+            <binding id='3405' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:35:12'>
+            <binding id='3404' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:34:23'>
+            <binding id='3403' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:34:23'>
+            <binding id='3402' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:34:23'>
+            <binding id='3401' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:34:12'>
+            <binding id='3400' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:34:12'>
+            <binding id='3399' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:33:16'>
+            <binding id='3398' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:33:16'>
+            <binding id='3397' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:33:16'>
+            <binding id='3396' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:32:14'>
+            <binding id='3395' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:32:14'>
+            <binding id='3394' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:32:21'>
+            <binding id='3393' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:32:21'>
+            <binding id='3392' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:32:21'>
+            <binding id='3391' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:31:14'>
+            <binding id='3390' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:27:8'>
+            <lhs>
+              <bound id='2038' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:27:12'>
+            <lhs>
+              <bound id='2039' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:30:10'>
+            <lhs>
+              <bound id='2040' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <next id='4' />
+        </block>
+        <block id='3'>
+          <assign location='helloworld.c:31:14'>
+            <lhs>
+              <bound id='3390' />
+            </lhs>
+            <rhs>
+              <bound id='2038' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:31:9'>
+            <lhs>
+              <bound id='2038' />
+            </lhs>
+            <rhs>
+              <bound id='3390' />
+              <modulo-truncate />
+              <integer-literal value='256' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:32:21'>
+            <lhs>
+              <bound id='3391' />
+            </lhs>
+            <rhs>
+              <bound id='2038' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:32:21'>
+            <lhs>
+              <bound id='3392' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3391' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:32:21'>
+            <lhs>
+              <bound id='3393' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3392' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:32:14'>
+            <lhs>
+              <bound id='3394' />
+            </lhs>
+            <rhs>
+              <bound id='3393' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:32:14'>
+            <lhs>
+              <bound id='3395' />
+            </lhs>
+            <rhs>
+              <bound id='3394' />
+              <plus />
+              <bound id='2039' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:32:9'>
+            <lhs>
+              <bound id='2039' />
+            </lhs>
+            <rhs>
+              <bound id='3395' />
+              <modulo-truncate />
+              <integer-literal value='256' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:33:16'>
+            <lhs>
+              <bound id='3396' />
+            </lhs>
+            <rhs>
+              <bound id='2038' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:33:16'>
+            <lhs>
+              <bound id='3397' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3396' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:33:16'>
+            <lhs>
+              <bound id='3398' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3397' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:33:9'>
+            <lhs>
+              <bound id='2041' />
+            </lhs>
+            <rhs>
+              <bound id='3398' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:34:12'>
+            <lhs>
+              <bound id='3399' />
+            </lhs>
+            <rhs>
+              <bound id='2038' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:34:12'>
+            <lhs>
+              <bound id='3400' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3399' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:34:23'>
+            <lhs>
+              <bound id='3401' />
+            </lhs>
+            <rhs>
+              <bound id='2039' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:34:23'>
+            <lhs>
+              <bound id='3402' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3401' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:34:23'>
+            <lhs>
+              <bound id='3403' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3402' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:34:16'>
+            <lhs>
+              <indirection>
+                <bound id='3400' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <bound id='3403' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:35:12'>
+            <lhs>
+              <bound id='3404' />
+            </lhs>
+            <rhs>
+              <bound id='2039' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:35:12'>
+            <lhs>
+              <bound id='3405' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3404' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:35:16'>
+            <lhs>
+              <bound id='3406' />
+            </lhs>
+            <rhs>
+              <bound id='2041' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:35:16'>
+            <lhs>
+              <indirection>
+                <bound id='3405' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <bound id='3406' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:10'>
+            <lhs>
+              <bound id='3407' />
+            </lhs>
+            <rhs>
+              <bound id='2040' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:10'>
+            <lhs>
+              <bound id='3408' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2034' />
+              <pointer-offset />
+              <bound id='3407' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:28'>
+            <lhs>
+              <bound id='3409' />
+            </lhs>
+            <rhs>
+              <bound id='2038' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:28'>
+            <lhs>
+              <bound id='3410' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3409' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:28'>
+            <lhs>
+              <bound id='3411' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3410' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:32'>
+            <lhs>
+              <bound id='3412' />
+            </lhs>
+            <rhs>
+              <bound id='3411' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:39'>
+            <lhs>
+              <bound id='3413' />
+            </lhs>
+            <rhs>
+              <bound id='2039' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:39'>
+            <lhs>
+              <bound id='3414' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3413' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:39'>
+            <lhs>
+              <bound id='3415' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3414' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:32'>
+            <lhs>
+              <bound id='3416' />
+            </lhs>
+            <rhs>
+              <bound id='3415' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:32'>
+            <lhs>
+              <bound id='3417' />
+            </lhs>
+            <rhs>
+              <bound id='3412' />
+              <plus />
+              <bound id='3416' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:21'>
+            <lhs>
+              <bound id='3418' />
+            </lhs>
+            <rhs>
+              <bound id='3417' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:21'>
+            <lhs>
+              <bound id='3419' />
+            </lhs>
+            <rhs>
+              <bound id='3418' />
+              <bitwise-and />
+              <integer-literal value='255' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:21'>
+            <lhs>
+              <bound id='3420' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2033' />
+              <pointer-offset />
+              <bound id='3419' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:21'>
+            <lhs>
+              <bound id='3421' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3420' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:36:14'>
+            <lhs>
+              <indirection>
+                <bound id='3408' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <bound id='3421' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:30:23'>
+            <lhs>
+              <bound id='2040' />
+            </lhs>
+            <rhs>
+              <bound id='2040' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <next id='4' />
+        </block>
+        <block id='4'>
+          <if location='helloworld.c:30:4'>
+            <bound id='2040' />
+            <less-than />
+            <bound-parameter id='2035' />
+            <then id='3' />
+            <else id='5' />
+          </if>
+        </block>
+        <block id='5'>
+          <return location='helloworld.c:38:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+      </externals>
+    </function>
+    <function name='ksa' location='helloworld.c:9' body-begin='10' body-end='23'>
+      <returns>
+        <void />
+      </returns>
+      <args>
+        <arg location='helloworld.c:9:31'>
+          <binding id='2019' name='state' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </addr-of>
+          </type>
+        </arg>
+        <arg location='helloworld.c:9:54'>
+          <binding id='2020' name='key' />
+          <type size='64' alignment='64'>
+            <addr-of>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </addr-of>
+          </type>
+        </arg>
+        <arg location='helloworld.c:9:65'>
+          <binding id='2021' name='len' />
+          <type size='32' alignment='32'>
+            <integer name='int' precision='32' />
+          </type>
+        </arg>
+      </args>
+      <body entrypoint='2'>
+        <locals>
+          <local location='helloworld.c:11:14'>
+            <binding id='2026' name='t' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:11:10'>
+            <binding id='2025' name='j' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:11:8'>
+            <binding id='2024' name='i' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:21:16'>
+            <binding id='3446' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:21:12'>
+            <binding id='3445' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:21:12'>
+            <binding id='3444' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:20:23'>
+            <binding id='3443' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:20:23'>
+            <binding id='3442' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:20:23'>
+            <binding id='3441' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:20:12'>
+            <binding id='3440' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:20:12'>
+            <binding id='3439' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:19:16'>
+            <binding id='3438' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:19:16'>
+            <binding id='3437' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:19:16'>
+            <binding id='3436' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:25'>
+            <binding id='3435' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:25'>
+            <binding id='3434' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:30'>
+            <binding id='3433' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:30'>
+            <binding id='3432' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:18:30'>
+            <binding id='3431' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:33'>
+            <binding id='3430' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:14'>
+            <binding id='3429' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:14'>
+            <binding id='3428' />
+            <type size='32' alignment='32'>
+              <integer name='int' precision='32' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:21'>
+            <binding id='3427' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:18:21'>
+            <binding id='3426' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:18:21'>
+            <binding id='3425' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+          <local location='helloworld.c:16:16'>
+            <binding id='3424' />
+            <type size='8' alignment='8'>
+              <integer name='unsigned char' unsigned='1' precision='8' />
+            </type>
+          </local>
+          <local location='helloworld.c:16:12'>
+            <binding id='3423' />
+            <type size='64' alignment='64'>
+              <addr-of>
+                <integer name='unsigned char' unsigned='1' precision='8' />
+              </addr-of>
+            </type>
+          </local>
+          <local location='helloworld.c:16:12'>
+            <binding id='3422' />
+            <type size='64' alignment='64'>
+              <integer name='long unsigned int' unsigned='1' precision='64' />
+            </type>
+          </local>
+        </locals>
+        <block id='2'>
+          <assign location='helloworld.c:11:10'>
+            <lhs>
+              <bound id='2025' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:13:6'>
+            <lhs>
+              <bound id='2026' />
+            </lhs>
+            <rhs>
+              <member-ref>
+                <structure>
+                  <bound id='2018' />
+                </structure>
+                <member>
+                  <bound id='2017' />
+                </member>
+              </member-ref>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:15:10'>
+            <lhs>
+              <bound id='2024' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <next id='4' />
+        </block>
+        <block id='3'>
+          <assign location='helloworld.c:16:12'>
+            <lhs>
+              <bound id='3422' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:16:12'>
+            <lhs>
+              <bound id='3423' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2019' />
+              <pointer-offset />
+              <bound id='3422' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:16:16'>
+            <lhs>
+              <bound id='3424' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:16:16'>
+            <lhs>
+              <indirection>
+                <bound id='3423' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <bound id='3424' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:15:23'>
+            <lhs>
+              <bound id='2024' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <next id='4' />
+        </block>
+        <block id='4'>
+          <if location='helloworld.c:15:4'>
+            <bound id='2024' />
+            <less-than-or-equal />
+            <integer-literal value='255' />
+            <then id='3' />
+            <else id='5' />
+          </if>
+        </block>
+        <block id='5'>
+          <assign location='helloworld.c:17:10'>
+            <lhs>
+              <bound id='2024' />
+            </lhs>
+            <rhs>
+              <integer-literal value='0' />
+            </rhs>
+          </assign>
+          <next id='7' />
+        </block>
+        <block id='6'>
+          <assign location='helloworld.c:18:21'>
+            <lhs>
+              <bound id='3425' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:21'>
+            <lhs>
+              <bound id='3426' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2019' />
+              <pointer-offset />
+              <bound id='3425' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:21'>
+            <lhs>
+              <bound id='3427' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3426' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:14'>
+            <lhs>
+              <bound id='3428' />
+            </lhs>
+            <rhs>
+              <bound id='3427' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:14'>
+            <lhs>
+              <bound id='3429' />
+            </lhs>
+            <rhs>
+              <bound id='3428' />
+              <plus />
+              <bound id='2025' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:33'>
+            <lhs>
+              <bound id='3430' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+              <modulo-truncate />
+              <bound-parameter id='2021' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:30'>
+            <lhs>
+              <bound id='3431' />
+            </lhs>
+            <rhs>
+              <bound id='3430' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:30'>
+            <lhs>
+              <bound id='3432' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2020' />
+              <pointer-offset />
+              <bound id='3431' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:30'>
+            <lhs>
+              <bound id='3433' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3432' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:25'>
+            <lhs>
+              <bound id='3434' />
+            </lhs>
+            <rhs>
+              <bound id='3433' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:25'>
+            <lhs>
+              <bound id='3435' />
+            </lhs>
+            <rhs>
+              <bound id='3429' />
+              <plus />
+              <bound id='3434' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:18:9'>
+            <lhs>
+              <bound id='2025' />
+            </lhs>
+            <rhs>
+              <bound id='3435' />
+              <modulo-truncate />
+              <integer-literal value='256' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:19:16'>
+            <lhs>
+              <bound id='3436' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:19:16'>
+            <lhs>
+              <bound id='3437' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2019' />
+              <pointer-offset />
+              <bound id='3436' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:19:16'>
+            <lhs>
+              <bound id='3438' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3437' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:19:9'>
+            <lhs>
+              <bound id='2026' />
+            </lhs>
+            <rhs>
+              <bound id='3438' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:20:12'>
+            <lhs>
+              <bound id='3439' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:20:12'>
+            <lhs>
+              <bound id='3440' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2019' />
+              <pointer-offset />
+              <bound id='3439' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:20:23'>
+            <lhs>
+              <bound id='3441' />
+            </lhs>
+            <rhs>
+              <bound id='2025' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:20:23'>
+            <lhs>
+              <bound id='3442' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2019' />
+              <pointer-offset />
+              <bound id='3441' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:20:23'>
+            <lhs>
+              <bound id='3443' />
+            </lhs>
+            <rhs>
+              <indirection>
+                <bound id='3442' />
+              </indirection>
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:20:16'>
+            <lhs>
+              <indirection>
+                <bound id='3440' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <bound id='3443' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:21:12'>
+            <lhs>
+              <bound id='3444' />
+            </lhs>
+            <rhs>
+              <bound id='2025' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:21:12'>
+            <lhs>
+              <bound id='3445' />
+            </lhs>
+            <rhs>
+              <bound-parameter id='2019' />
+              <pointer-offset />
+              <bound id='3444' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:21:16'>
+            <lhs>
+              <bound id='3446' />
+            </lhs>
+            <rhs>
+              <bound id='2026' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:21:16'>
+            <lhs>
+              <indirection>
+                <bound id='3445' />
+              </indirection>
+            </lhs>
+            <rhs>
+              <bound id='3446' />
+            </rhs>
+          </assign>
+          <assign location='helloworld.c:17:23'>
+            <lhs>
+              <bound id='2024' />
+            </lhs>
+            <rhs>
+              <bound id='2024' />
+              <plus />
+              <integer-literal value='1' />
+            </rhs>
+          </assign>
+          <next id='7' />
+        </block>
+        <block id='7'>
+          <if location='helloworld.c:17:4'>
+            <bound id='2024' />
+            <less-than-or-equal />
+            <integer-literal value='255' />
+            <then id='6' />
+            <else id='8' />
+          </if>
+        </block>
+        <block id='8'>
+          <return location='helloworld.c:23:1'>
+          </return>
+        </block>
+      </body>
+      <externals>
+        <external location='helloworld.c:7:29'>
+          <binding id='2018' name='zyx' />
+          <type size='64' alignment='32'>
+            <structure id='1529'/>
+          </type>
+          <initial>
+            <constructor>
+              <integer-literal value='1' />
+              <integer-literal value='2' />
+            </constructor>
+          </initial>
+        </external>
+      </externals>
+    </function>
+  </function-bodies>
+</lh-translation-unit>

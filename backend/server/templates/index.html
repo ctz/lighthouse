@@ -1,0 +1,52 @@
+{% extends "template.html" %}
+
+{% block title %}Test{% endblock %}
+
+{% block content %}
+
+<table cellpadding="0" cellspacing="0" id="unitcode">
+{% for line in lines %}
+
+<tr class='{% cycle 'rowa' 'rowb' %}'><td class='annot'>
+{% if line.function %}
+{% with line.function as fn %}
+<a id="do_showblocks_{{fn.name}}">
+<img src="/m/i/blocks.png" border="0" title="Basic block view for {{fn.name}}"/></a><a id="do_showinfo_{{fn.name}}"><img src="/m/i/info.png" border="0" title="Information on function {{fn.name}}"/></a>
+<div id="info_{{fn.name}}">
+Cyclomatic complexity: {{fn.cyclomatic_complexity}}<br/>
+Complexity / LOC: {{fn.complexity_raw_lines|floatformat}}<br/>
+Complexity / sLOC: {{fn.complexity_source_lines|floatformat}}<br/>
+Expressions: {{fn.count_expressions}}<br/>
+Basic blocks: {{fn.count_blocks}}<br/>
+</div>
+<script type="text/javascript">
+$('#info_{{fn.name}}').hide();
+$('#do_showinfo_{{fn.name}}').bt({
+  contentSelector: "$('#info_{{fn.name}}')",
+  positions: ['bottom'],
+});
+</script>
+{% endwith %}
+{% endif %}
+</td>
+<td class='linenos'><pre class='lineno'>{{ line.number }}</pre></td>
+<td class='code' id='lineno_{{line.number}}'><pre>{{ line.formatted|safe }}</pre></td>
+{% if line.function %}
+<td rowspan="{{ line.function.body_bounds.diff }}" class="cfg">
+<div id="blocks_{{line.function.name}}" class="cfg" title="Control flow of function {{line.function.name}}">
+{{ line.bbgraph|safe }}
+</div>
+<script type="text/javascript">
+$('#blocks_{{line.function.name}}').hide();
+$('#do_showblocks_{{line.function.name}}').bind("click", function(e) {
+  var v = $('#blocks_{{line.function.name}}');
+  v.toggle('slow');
+});
+</script>
+</td>
+{% endif %}
+</tr>
+
+{% endfor %}
+</table>
+{% endblock %}

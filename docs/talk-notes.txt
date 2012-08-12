@@ -1,0 +1,24 @@
+time buildme nglibs + lighthouse empty:
+160.12user 13.08system 2:15.47elapsed 127%CPU (0avgtext+0avgdata 0maxresident)k
+11520inputs+188712outputs (12major+2986984minor)pagefaults 0swaps
+
+
+time make algswitch + lighthouse d3s:
+17.47user 3.06system 0:31.35elapsed 65%CPU (0avgtext+0avgdata 0maxresident)k
+3096inputs+34440outputs (8major+681489minor)pagefaults 0swaps
+
+time buildme nglibs + lighthouse d3s:
+real    1m58.543s
+user    2m14.036s
+sys     0m12.869s
+
+
+1. intro + rationale
+  - general purpose sa all well and good
+  - but can't help verify use of your own apis
+  - target is actually general purpose
+2. arch
+  - gcc plugins
+  - two deployment modes
+3. example of xml repr
+4. demo + overview of nglibs results
